@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman</title>
+</head>
+<body>
+<h1>Виселица!</h1>
+<script>
+    // Создаем массив со словами
+    const words = [
+        "программа",
+        "макака",
+        "прекрасный",
+        "оладушек",
+        "трактор",
+        "горизонт"
+    ];
+
+    // Выбираем случайное слово
+    const word = words[Math.floor(Math.random() * words.length)];
+
+    // Создаем итоговый массив
+    let answerArray = [];
+    for (let i = 0; i < word.length; i++) {
+        answerArray[i] = "_";
+    }
+
+    let remainingLetters = word.length;
+    let guessCount = 0
+    let guesses = []
+    const guessLimit = 7
+    let doubleGuess = false
+
+    // Игровой цикл
+    while (remainingLetters > 0) {
+        // Показываем состояние игры
+        alert(answerArray.join(" "));
+
+        // Запрашиваем вариант ответа
+        let guess = prompt("Угадайте букву, или нажмите Отмена для выхода из игры.");
+        guessCount++; //подсчитываем кол-во попыток
+
+        // Проверяем, не повторяется ли угаданная ранее буква
+        doubleGuess = false;
+        for (let k = 0; k < guesses.length; k++){
+            if (guess === guesses[k]){
+                doubleGuess = true
+            }
+        }
+
+        if (guess === null) {
+            // Выходим из игрового цикла
+            break;
+        } else if (guess.length !== 1) {
+            alert("Пожалуйста, введите одиночную букву.");
+        } else if (doubleGuess){
+            alert("Было! Попробуйте новую букву.");
+        } else {
+            guess = guess.toLowerCase();
+            // Обновляем состояние игры
+            for (let j = 0; j < word.length; j++) {
+                if (word[j] === guess) {
+                    answerArray[j] = guess;
+                    remainingLetters--;
+                    guesses.push(guess)
+                }
+            }
+        }
+        //проверяем, не исчерпалось ли кол-во попыток
+        if (guessCount === guessLimit){
+            break;
+        }
+        // Конец игрового цикла
+    }
+
+    // Отображаем ответ и поздравляем игрока
+    alert(answerArray.join(" "));
+    if (remainingLetters == 0){
+        alert("Отлично! Было загадано слово " + word);
+    } else {
+        alert("Игра окончена! Исчерпано к-во попыток");
+    }
+
+</script>
+</body>
+</html>
