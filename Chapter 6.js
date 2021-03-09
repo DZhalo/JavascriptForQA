@@ -48,7 +48,7 @@ while (randomString.length < 9) {
 console.log("Random string: ", randomString)
 
 //#3. h4ck3r sp34k
-let input = "javascript is awesome"
+const input = "javascript is awesome"
 let output = ""
 
 for (let i = 0; i < input.length; i++){
